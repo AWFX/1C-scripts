@@ -9,3 +9,6 @@ apt-get install -y locales
 apt install -y apache2
 
 dpkg-reconfigure locales
+
+read first, second
+$first $second

@@ -7,21 +7,17 @@
 wget https://repo.postgrespro.ru/1c-13/keys/pgpro-repo-add.sh 		# Получение скрипта, который добавляет репозитории
 sh pgpro-repo-add.sh 
 #
-apt-get install postgrespro-1c-13									# установка СУБД PostgreSQL
+apt-get install -y postgrespro-1c-13									# установка СУБД PostgreSQL
 rm -rf pgpro-repo-add.sh											# удаление скрипта
 #
 rm -rf /var/lib/pgpro/1c-13/data/ 									# удаление тестовой базы данных
 /opt/pgpro/1c-13/bin/pg-setup initdb --tune=1c --locale=ru_RU.UTF-8 # инициализация новой базы с нужными параметрами
 #
-read -p "Введите пароль для пользователя postgres" pass;
+read -p "Введите пароль для пользователя postgres\nЗайдите в консоль (psql) и задайте (ALTER USER)" pass;
 su - postgres
-psql
-ALTER USER postgres WITH ENCRYPTED PASSWORD $pass;
-\q
-exit
 #
-read -p "Введите адрес сети: " ip_network
-echo "host all all $ip_network md5" >> /var/lib/pgpro/1c-13/data/pg_hba.conf
+read -p "Введите host all all (адрес сети(с маской)) md5: " ip_network
+nano /var/lib/pgpro/1c-13/data/pg_hba.conf
 #
 #
 systemctl enable postgrespro-1c-13 									# добавление PostgreSQL в автозагрузку
@@ -69,6 +65,9 @@ rm -rf *.deb			# удаление пакетов
 #
 #
 apt install -y ufw 		# установка Firewall
+
+read -p "Выключите параметр IPV6" help 
+nano /etc/default/ufw  
 systemctl enable ufw	# добавление сервиса ufw в автозагрузку
 systemctl start ufw		# запуск сервиса ufw
 #
@@ -93,10 +92,16 @@ systemctl enable apache2 	# добавление веб-сервера в авт
 systemctl start apache2 	# запуск веб-сервера
 #
 #
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout .key -out .crt	# создание самоподписанного сертификата на год
-cd /etc/apache2/sites-available
-read -p "Пропишите название вашего сертификата" help
-nano  000-default.conf
+cd /etc/ssl/certs
+read -p "Введите имя сертификата: " crt_name
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout $crt_name.key -out $crt_name.crt	# создание самоподписанного сертификата на год
+
+read -p "Пропишите название вашего сертификата 
+	SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/crt_name.crt
+    SSLCertificateKeyFile /etc/ssl/certs/crt_name.key
+" help
+nano  /etc/apache2/sites-available/000-default.conf
 sudo a2enmod ssl	# проверка корректности сертификата
 
 read -p "Пропишите имя вашего сервера" help

@@ -5,7 +5,7 @@
 #
 #
 wget https://repo.postgrespro.ru/1c-13/keys/pgpro-repo-add.sh 		# Получение скрипта, который добавляет репозитории
-sh pgpro-repo-add.sh 
+sh pgpro-repo-add.sh
 #
 apt-get install -y postgrespro-1c-13									# установка СУБД PostgreSQL
 rm -rf pgpro-repo-add.sh											# удаление скрипта
@@ -30,7 +30,7 @@ systemctl start postgrespro-1c-13									# запуск PostgreSQL
 apt-get install -y ttf-mscorefonts-installer		# установка шрифтов, необходимых для корректной работы
 fc-cache –fv										# обновление шрифтов системы
 #
-apt-get install -y libfreetype6 libgsf-1-common unixodbc glib2.0 libgtk-3-0 lcms2 libc6:i386 # установка необходимых компонентов
+apt-get install -y libfreetype6 libgsf-1-common unixodbc glib2.0 libgtk-3-0 lcms2 sudo liblcms2-utils libc6-dev-i386 # установка необходимых компонентов
 #
 mount /dev/sdb /mnt 		# монтирование флешки с архивом
 #
@@ -52,6 +52,7 @@ umount /dev/sdb /mnt	# монтирование флешки с архивом
 #
 #
 wget https://download.etersoft.ru/pub/Etersoft/HASP/stable/x86_64/Ubuntu/22.04/haspd_8.53-eter1ubuntu_amd64.deb # получение пакетов 
+		https://download.etersoft.ru/pub/Etersoft/HASP/stable/x86_64/Ubuntu/22.04/haspd_8.53-eter1ubuntu_amd64.deb  
 #
 dpkg -i *.deb 			# установка пакетов
 #
@@ -105,6 +106,6 @@ nano  /etc/apache2/sites-available/000-default.conf
 sudo a2enmod ssl	# проверка корректности сертификата
 
 read -p "Пропишите имя вашего сервера" help
-nano /etc/apache2/sites-available/apache2.conf
+nano  /etc/apache2/sites-available/000-default.conf
  
  

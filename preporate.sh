@@ -4,7 +4,7 @@
 # Установка правильного времени для региона Тюмень
 #
 #
-timedatectl set-timezone Asia\Yekaterinburg
+timedatectl set-timezone Asia/Yekaterinburg
 #
 # Установка вспомогательных компонентов
 #

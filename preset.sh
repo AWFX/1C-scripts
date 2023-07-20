@@ -19,6 +19,7 @@ apt-get install -y locales	# утилита для настройки локал
 # Установка локали
 #
 #
+read -p "Русская локаль - 392, Английская локаль - 160"
 dpkg-reconfigure locales
 #
 #

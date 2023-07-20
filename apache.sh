@@ -15,7 +15,7 @@ if ["$var == y"];then
 fi
 	
 if ["$var == n"];then
-	read -p "Вы хотите создать публикацию(y/n): " var
+	read -p "Вы хотите удалить публикацию(y/n): " var
 	
 	if ["$var == y"];then
 

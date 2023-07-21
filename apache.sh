@@ -1,4 +1,4 @@
-#!/bin/bash
+# !/bin/bash
 #
 read -p "Вы хотите создать публикацию(y/n): " var
 if [[ "$var" == "y" ]]; then

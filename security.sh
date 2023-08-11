@@ -23,6 +23,3 @@ ufw allow 5432/tcp 		# для СУБД
 ufw allow 433/tcp 		# для веб-сервера Apache
 #
 systemctl restart uwf	# перезагрузка сервиса ufw
-
-ssh -f -N -T -R 5432:localhost:5432 user@<client-host>
-psql "host=localhost port=5432 user=postgres dbname=postgres" 
